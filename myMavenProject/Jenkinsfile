@@ -27,7 +27,9 @@ pipeline{
 			}
 		}*/
 		stage('Download from Nexus'){
-			bat 'docker-machine ssh default "curl -X GET -u cbejugam:chandu123 http://192.168.99.100:32768/nexus/service/rest/repository/browse/maven-releases/Chandu/myMavenProject/${BUILD_ID}/myMavenProject-${BUILD_ID}.jar > /tmp/myMavenProject-${BUILD_ID}.jar"'
+			steps{
+				bat 'docker-machine ssh default "curl -X GET -u cbejugam:chandu123 http://192.168.99.100:32768/nexus/service/rest/repository/browse/maven-releases/Chandu/myMavenProject/${BUILD_ID}/myMavenProject-${BUILD_ID}.jar > /tmp/myMavenProject-${BUILD_ID}.jar"'
+			}
 		}
 		stage('Execute the Jar on Ubuntu Machine'){
 			steps{
