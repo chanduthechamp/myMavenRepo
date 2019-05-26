@@ -3,7 +3,7 @@ pipeline{
 	stages {
 		stage('Build Maven App'){
 			steps{
-				bat 'docker-machine ssh default "docker run -it --rm --name mymavenproject -v "/Docker_Shared_FS/Maven_FS/myMavenRepo/myMavenProject":/usr/src/mymaven -w /usr/src/mymaven maven:3.6.1-jdk-8-slim mvn clean install"'
+				bat 'docker-machine ssh default "docker run -it --rm --name mymavenproject -v \"/Docker_Shared_FS/Maven_FS/myMavenRepo/myMavenProject\":/usr/src/mymaven -w /usr/src/mymaven maven:3.6.1-jdk-8-slim mvn clean install"'
 			}
 		}
 		stage('Start myUbuntu Docker container'){
