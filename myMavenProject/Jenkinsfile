@@ -8,23 +8,23 @@ pipeline{
 		}
 		stage('Start myUbuntu Docker container'){
 			steps{
-				docker-machine ssh default "docker start myUbuntu"
+				bat 'docker-machine ssh default "docker start myUbuntu"'
 				sleep 60
 			}
 		}
 		stage('Copy Jar to Ubuntu Machine'){
 			steps{
-				docker-machine ssh default "docker cp /Docker_Shared_FS/Maven_FS/myMavenRepo/myMavenProject/target/myMavenProject-1.0-SNAPSHOT.jar myUbuntu:/tmp"
+				bat 'docker-machine ssh default "docker cp /Docker_Shared_FS/Maven_FS/myMavenRepo/myMavenProject/target/myMavenProject-1.0-SNAPSHOT.jar myUbuntu:/tmp"'
 			}
 		}
 		stage('Execute the Jar on Ubuntu Machine'){
 			steps{
-				docker-machine ssh default "docker exec myUbuntu /bin/bash -c \"java -jar /tmp/myMavenProject-1.0-SNAPSHOT.jar\""
+				bat 'docker-machine ssh default "docker exec myUbuntu /bin/bash -c \"java -jar /tmp/myMavenProject-1.0-SNAPSHOT.jar\""'
 			}
 		}
 		stage('Stop ubuntu container'){
 			steps{
-				docker-machine ssh default "docker stop myUbuntu"
+				bat 'docker-machine ssh default "docker stop myUbuntu"'
 				sleep 30
 			}
 		}
