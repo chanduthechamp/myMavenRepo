@@ -12,7 +12,7 @@ pipeline{
 		}
 		stage('Upload file to Nexus'){
 			steps{
-				nexusArtifactUploader artifacts: [[artifactId: 'myMavenProject', classifier: '', file: '/Docker_Shared_FS/Maven_FS/myMavenRepo/myMavenProject/target/myMavenProject-1.0-SNAPSHOT.jar', type: 'jar']], credentialsId: 'Chandu_Nexus', groupId: 'Chandu', nexusUrl: '192.168.99.100:32768/nexus', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-releases', version: '${BUILD_ID}'
+				nexusArtifactUploader artifacts: [[artifactId: 'myMavenProject', classifier: '', file: '/e/Docker/Docker Shared FS/Maven_FS/myMavenRepo/myMavenProject/target/myMavenProject-1.0-SNAPSHOT.jar', type: 'jar']], credentialsId: 'Chandu_Nexus', groupId: 'Chandu', nexusUrl: '192.168.99.100:32768/nexus', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-releases', version: '${BUILD_ID}'
 			}
 		}
 		stage('Start myUbuntu Docker container'){
