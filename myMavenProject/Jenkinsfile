@@ -5,24 +5,25 @@ pipeline{
 		}
 	}
 	stages {
-		parallel{
-		stage('Build Maven App'){
-			steps{
-				bat 'docker-machine ssh default "docker run -it --rm --name mymavenproject -v \"/Docker_Shared_FS/Maven_FS/myMavenRepo/myMavenProject\":/usr/src/mymaven -w /usr/src/mymaven maven:3.6.1-jdk-8-slim mvn clean install"'
-			}
+		stage('Build Maven App and Start myUbuntu Docker container'){
+			parallel(
+				steps{
+					"Maven Build": {bat 'docker-machine ssh default "docker run -it --rm --name mymavenproject -v \"/Docker_Shared_FS/Maven_FS/myMavenRepo/myMavenProject\":/usr/src/mymaven -w /usr/src/mymaven maven:3.6.1-jdk-8-slim mvn clean install"'},
+					"Start Container": {bat 'docker-machine ssh default "docker start myUbuntu"'}
+				}
+			)	
 		}
 		/*stage('Upload file to Nexus'){
 			steps{
 				nexusArtifactUploader artifacts: [[artifactId: 'myMavenProject', classifier: '', file: 'E:\\Docker\\"Docker Shared FS"\\Maven_FS\\myMavenRepo\\myMavenProject\\target\\myMavenProject-1.0-SNAPSHOT.jar', type: 'jar']], credentialsId: 'Chandu_Nexus', groupId: 'Chandu', nexusUrl: '192.168.99.100:32768/nexus', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-releases', version: '${BUILD_ID}'
 			}
 		}*/
-		stage('Start myUbuntu Docker container'){
+		/*stage('Start myUbuntu Docker container'){
 			steps{
 				bat 'docker-machine ssh default "docker start myUbuntu"'
 				sleep 60
 			}
-		}
-		}
+		}*/
 		stage('Copy Jar to Ubuntu Machine'){
 			steps{
 				bat 'docker-machine ssh default "docker cp /Docker_Shared_FS/Maven_FS/myMavenRepo/myMavenProject/target/myMavenProject-1.0-SNAPSHOT.jar myUbuntu:/tmp"'
