@@ -1,6 +1,8 @@
 pipeline{
 	agent {
-		myLappyNode
+		node {
+			label:'myLappyNode'
+		}
 	}
 	stages {
 		stage('Build Maven App'){
